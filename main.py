@@ -21,7 +21,7 @@ def apagar():
 def cancelar_apagado():
     global proceso_apagado
     if proceso_apagado is not None:
-        os.system("shutdown /a")
+        os.system("shutdown -a")
         resultado.set("Se ha cancelado el apagado programado.")
         proceso_apagado = None
     else:
@@ -38,7 +38,7 @@ def standby():
 # Configuración de la ventana de la aplicación
 ventana = tk.Tk()
 ventana.title("PC Timer")
-ventana.geometry("300x200")
+ventana.geometry("300x250")
 ventana.resizable(True, True)
 
 # Etiquetas y entradas de texto para el tiempo en horas y minutos
@@ -56,22 +56,24 @@ entry_minutos.grid(row=1, column=1, padx=10, pady=10)
 boton_apagar = tk.Button(ventana, text="Apagar", command=apagar)
 boton_apagar.grid(row=2, column=0, padx=10, pady=10)
 
-boton_cancelar_apagado = tk.Button(ventana, text="Cancelar Apagado", command=cancelar_apagado)
-boton_cancelar_apagado.grid(row=2, column=1, padx=10, pady=10)
+# Crear un boton centrado con texto SOS que manda un comando al cmd
+boton_sos = tk.Button(ventana, text="Cancelar Apagado", command=lambda: os.system("shutdown -a"))
+boton_sos.grid(row=2, column=1, columnspan=2, padx=10, pady=10)
+
 
 #crear separador vertical
 separador = tk.Frame(ventana, height=2, bd=1, relief=tk.SUNKEN)
 separador.grid(row=4, columnspan=2, sticky=tk.EW, padx=5, pady=5)
 
 boton_reiniciar = tk.Button(ventana, text="Reiniciar (Imediato)", command=reiniciar)
-boton_reiniciar.grid(row=5, column=0, padx=10, pady=10)
+boton_reiniciar.grid(row=6, column=0, padx=10, pady=10)
 
 boton_standby = tk.Button(ventana, text="Suspender (Imediato)", command=standby)
-boton_standby.grid(row=5, column=1, padx=10, pady=10)
+boton_standby.grid(row=6, column=1, padx=10, pady=10)
 
 # Etiqueta para mostrar el resultado
 resultado = tk.StringVar()
 label_resultado = tk.Label(ventana, textvariable=resultado)
-label_resultado.grid(row=5, column=0, columnspan=2, padx=10, pady=10)
+label_resultado.grid(row=3, column=0, columnspan=2, padx=10, pady=10)
 
 ventana.mainloop()
